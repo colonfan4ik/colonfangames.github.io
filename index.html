@@ -109,21 +109,34 @@
         </div>
     </div>
 
-    <script>
-        // Шанс выпадения ошибки при загрузке (30%)
-        window.onload = function() {
-            if (Math.random() < 0.3) {
-                triggerError();
-            }
-        };
+    <audio id="error-audio" src="error_music.mp3" loop></audio>
 
-        function triggerError() {
-            document.getElementById('main-ui').style.display = 'none';
-            document.getElementById('error-screen').style.display = 'block';
-            document.title = "oops you clicked on bad button!";
-            document.body.style.backgroundImage = "none";
-            document.body.style.backgroundColor = "#0000aa";
+<script>
+    window.onload = function() {
+        // Шанс 30%, что вылетит ошибка
+        if (Math.random() < 0.3) {
+            triggerError();
         }
-    </script>
+    };
+
+    function triggerError() {
+        // Меняем интерфейс
+        document.getElementById('main-ui').style.display = 'none';
+        document.getElementById('error-screen').style.display = 'block';
+        
+        // Меняем заголовок
+        document.title = "oops you clicked on bad button!";
+        
+        // Очищаем фон
+        document.body.style.backgroundImage = "none";
+        document.body.style.backgroundColor = "#0000aa";
+
+        // Запускаем музыку
+        const audio = document.getElementById('error-audio');
+        audio.play().catch(function(error) {
+            console.log("Браузер заблокировал автовоспроизведение до клика пользователя.");
+        });
+    }
+</script>
 </body>
 </html>
